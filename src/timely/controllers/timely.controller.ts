@@ -5,7 +5,7 @@ import { TimelyService } from '../services/timely.service';
 export class TimelyController {
   constructor(private readonly timelyService: TimelyService) {}
   @Get('utc-to-timezone')
-  convertUstToTimezone(
+  convertUtcToTimezone(
     @Query('utcTime') utcTime: string,
     @Query('offset') offset: string,
   ): string {
@@ -17,6 +17,6 @@ export class TimelyController {
     @Query('timezoneTime') timezoneTime: string,
     @Query('offset') offset: string,
   ): string {
-    return this.timelyService.convertToUTC(timezoneTime, offset);
+    return this.timelyService.convertToUtc(timezoneTime, offset);
   }
 }
