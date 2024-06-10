@@ -7,7 +7,7 @@ import { InvalidTimezoneTimeFormatException } from '../exceptions/invalid-timezo
 @Injectable()
 export class TimelyService {
   //** convert UTC to standard time */
-  convertUtcToTimezone(utcTimeStr: string, offset: Timezone | string): string {
+  static convertUtcToTimezone(utcTimeStr: string, offset: Timezone | string): string {
     this.validateUtcFormat(utcTimeStr);
     const { sign, hours, minutes } = this.validateOffsetFormat(offset);
 
@@ -21,7 +21,7 @@ export class TimelyService {
   }
 
   //** convert standard to UTC time */
-  convertToUtc(timezoneTime: string, offsetString: Timezone | string) {
+  static convertToUtc(timezoneTime: string, offsetString: Timezone | string) {
     this.validateTimezoneFormat(timezoneTime);
     this.validateOffsetFormat(offsetString);
     const [datePart, timePart] = timezoneTime.split('_');
@@ -45,7 +45,7 @@ export class TimelyService {
   }
 
   //** validate UTC */
-  private validateUtcFormat(utcTimeStr: string): void {
+  private static validateUtcFormat(utcTimeStr: string): void {
     const utcRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/;
     if (!utcTimeStr.match(utcRegex)) {
       throw new InvalidUtcFormatException(utcTimeStr);
@@ -53,7 +53,7 @@ export class TimelyService {
   }
 
   //** validate offset */
-  private validateOffsetFormat(offset: string): {
+  private static validateOffsetFormat(offset: string): {
     sign: string;
     hours: number;
     minutes: number;
@@ -73,7 +73,7 @@ export class TimelyService {
   }
 
   //** validate timezone time */
-  private validateTimezoneFormat(timezoneTimeStr: string): void {
+  private static validateTimezoneFormat(timezoneTimeStr: string): void {
     const timezoneRegex = /^\d{4}-\d{2}-\d{2}_\d{2}:\d{2}:\d{2}$/;
     if (!timezoneTimeStr.match(timezoneRegex)) {
       throw new InvalidTimezoneTimeFormatException(timezoneTimeStr);
