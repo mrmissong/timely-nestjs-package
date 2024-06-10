@@ -21,7 +21,7 @@ export class TimelyService {
   }
 
   //** convert standard to UTC time */
-  convertToUTC(timezoneTime: string, offsetString: Timezone | string) {
+  convertToUtc(timezoneTime: string, offsetString: Timezone | string) {
     this.validateTimezoneFormat(timezoneTime);
     this.validateOffsetFormat(offsetString);
     const [datePart, timePart] = timezoneTime.split('_');
@@ -41,13 +41,12 @@ export class TimelyService {
       (offsetHours * 60 + offsetMinutes) * 60 * 1000 * sign;
 
     const utcTime = new Date(localDate.getTime() - offsetInMilliseconds);
-
-    return utcTime.toISOString();
+    return utcTime.toISOString().split('.')[0] + 'Z';
   }
 
   //** validate UTC */
   private validateUtcFormat(utcTimeStr: string): void {
-    const utcRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+    const utcRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/;
     if (!utcTimeStr.match(utcRegex)) {
       throw new InvalidUtcFormatException(utcTimeStr);
     }
